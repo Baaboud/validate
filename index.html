@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation</title>
+</head>
+
+<body>
+    <section id="form-section">
+        <div class="container">
+            <h4 class="text-center">Contact Form</h4>
+            <div id="error-id" class="text-center"></div>
+        </div>
+        <form method="POST" enctype="multipart/form-data" onsubmit="return validate ()">
+            <label>Name</label>
+            <input type="text" name="name" id="name" placeholder="Name">
+            <label>Email</label>
+            <input type="email" name="email" id="email" placeholder="Email">
+            <label>Password</label>
+            <input type="password" name="pass" id="pass" placeholder="Password">
+            <label>Password</label>
+            <input type="repassword" name="repass" id="repass" placeholder="Confirm Password">
+            <label>Phone</label>
+            <input type="tel" name="phone" id="phone" placeholder="Phone number">
+            <label>Url</label>
+            <input type="url" name="url" id="url" placeholder="url">
+            <label>Message</label>
+            <textarea name="message" id="message" placeholder="message" cols="30" rows="10"></textarea>
+            <button>Submit</button>
+        </form>
+    </section>
+    <script>
+        function validate() {
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var pass = document.getElementById('pass').value;
+            var repass = document.getElementById('repass').value;
+            var phone = document.getElementById('phone').value;
+            var url = document.getElementById('url').value;
+            var message = document.getElementById('message').value;
+            var errorText = document.getElementById('error-id');
+            var message;
+            var passCheck = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d)");
+            var urlCheck = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i');
+            errorText.style.padding = '20px';
+
+            if (name.length < 3 || name.length > 10) {
+                alert("Not valid");
+                return false
+            }
+            if (email.indexOf('@') == -1) {
+                alert("Enter Valid Email");
+                return false
+            }
+            if (!(passCheck.test(pass)) && pass.length < 6) {
+                alert("Not Allowed Passwrod\n Password must contain uppercase \nlowercaese \nnumber \nsymbol \nnumber\nat least six letters");
+                return false
+            }
+            if (pass != repass) {
+                alert("Please check your password");
+                return false
+            }
+            if (!(phone.startsWith("777")) && phone.length != 9) {
+                alert("Enter Valid Phone Number");
+                return false
+            }
+            if (!(urlCheck.test(url))) {
+                alert("Not valid URL");
+                return false
+            }
+            if (message.length <= 20) {
+                alert("Enter 20 character message");
+                return false
+            }
+            alert('Form submitted successfully');
+            return true;
+        }
+    </script>
+
+</html>
